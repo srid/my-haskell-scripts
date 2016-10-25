@@ -1,6 +1,10 @@
 module Lib
-    ( someFunc
+    ( parseMovie
     ) where
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+type Movie = String
+
+parseMovie :: String -> Movie
+parseMovie s = s
+
+-- TODO parser!
