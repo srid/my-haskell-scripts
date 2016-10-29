@@ -14,7 +14,7 @@ build-type:          Simple
 cabal-version:       >=1.10
 
 executable my-haskell-scripts-exe
-  hs-source-dirs:      app
+  hs-source-dirs:      src
   main-is:             Main.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
