@@ -5,12 +5,11 @@
 
 module MovieTitle where
 
-import System.Exit (exitFailure)
-import System.IO
-import Data.Char (isSpace)
-import Control.Monad (replicateM)
-import Text.ParserCombinators.Parsec
-import Data.List.Utils (replace, split, join)
+import           Control.Monad                 (replicateM)
+import           Data.Char                     (isSpace)
+import           Data.List.Utils               (replace)
+import           System.IO
+import           Text.ParserCombinators.Parsec
 
 -- TODO
 -- parsing:

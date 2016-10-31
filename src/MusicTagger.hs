@@ -9,13 +9,13 @@
 
 module MusicTagger where
 
-import System.IO
-import System.Exit (exitFailure)
-import Data.Char (toUpper, toLower)
-import Data.Maybe (fromMaybe)
+import           Data.Char                     (toLower, toUpper)
+import           Data.Maybe                    (fromMaybe)
+import           System.Exit                   (exitFailure)
+import           System.IO
 
-import Text.ParserCombinators.Parsec
-import Data.List.Utils (replace, split, join)
+import           Data.List.Utils               (join, replace)
+import           Text.ParserCombinators.Parsec
 
 type Genre  = Int
 type Artist = String
@@ -59,11 +59,11 @@ track :: GenParser Char st Track
 track = many anyChar
 
 cleanup :: Song -> Song
-cleanup (Song genre artist album track) =
-  Song genre
-       (fixArtistCase . c  $  artist)
-       (titleCase     . c <$> album)
-       (titleCase     . c  $  track)
+cleanup (Song g r a t) =
+  Song g
+       (fixArtistCase . c  $  r)
+       (titleCase     . c <$> a)
+       (titleCase     . c  $  t)
   where
     c =
       replace "_" " " .
@@ -97,15 +97,15 @@ id3v2CLI :: [String] -> String
 id3v2CLI = join " " . (:) "id3v2"
 
 tagSetCLI :: String -> Song -> String
-tagSetCLI path (Song genre artist albumMaybe track) =
+tagSetCLI path (Song g r a t) =
   join "\n" [ id3v2CLI [ "-D"]
-            , id3v2CLI [ "--artist" , show artist
-                       , "--album"  , show album
-                       , "--song"   , show track
-                       , "--genre"  , show genre
+            , id3v2CLI [ "--artist" , show r
+                       , "--album"  , show a'
+                       , "--song"   , show t
+                       , "--genre"  , show g
                        , show path]]
   where
-    album = fromMaybe (artist ++ " Songs") albumMaybe
+    a' = fromMaybe (r ++ " Songs") a
 
 main' :: String -> IO ()
 main' line =
